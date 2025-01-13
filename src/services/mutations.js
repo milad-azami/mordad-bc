@@ -26,4 +26,16 @@ const useCreateProduct = () => {
   return useMutation({ mutationFn, onSuccess });
 };
 
-export { useRegister, useLogin, useCreateProduct };
+const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  const mutationFn = (data) => api.delete("products", data);
+
+  const onSuccess = async () => {
+    await queryClient.invalidateQueries({ queryKey: ["all-products"] });
+  };
+
+  return useMutation({ mutationFn, onSuccess });
+};
+
+export { useRegister, useLogin, useCreateProduct, useDeleteProduct };

@@ -1,9 +1,13 @@
+import { useState } from "react";
+
 import AddProductForm from "../components/AddProductForm";
 import ProductCard from "../components/ProductCard";
 import { useGetAllProducts } from "../services/queries";
 
 function ProductsPage() {
-  const { data, isPending, isError } = useGetAllProducts();
+  const [page, setPage] = useState(1);
+
+  const { data, isPending, isError } = useGetAllProducts(page);
 
   if (isPending) return <p>Loading...</p>;
 
@@ -17,6 +21,7 @@ function ProductsPage() {
           <ProductCard key={product?.id} product={product} />
         ))}
       </ul>
+      <button onClick={() => setPage(2)}>go to page #2</button>
       <AddProductForm />
     </div>
   );
